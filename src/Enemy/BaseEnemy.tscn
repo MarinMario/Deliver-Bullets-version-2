@@ -2,5 +2,7 @@
 
 [ext_resource path="res://Enemy/BaseEnemy.cs" type="Script" id=1]
 
-[node name="BaseEnemy" type="KinematicBody2D"]
+[node name="BaseEnemy" type="KinematicBody2D" groups=[
+"Enemies",
+]]
 script = ExtResource( 1 )

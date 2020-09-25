@@ -30,7 +30,7 @@ public class Bullet : Area2D
     // this is called by body_entered signal
     private void Hit(KinematicBody2D body)
     {
-        if (body.IsInGroup("enemies"))
+        if (body.IsInGroup("Enemies"))
         {
             (body as BaseEnemy).TakeDamange(100);
             QueueFree();
