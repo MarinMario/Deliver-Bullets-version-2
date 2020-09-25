@@ -28,7 +28,7 @@ public class Bullet : Area2D
     }
 
     // this is called by body_entered signal
-    private void hit(KinematicBody2D body)
+    private void Hit(KinematicBody2D body)
     {
         if (body.IsInGroup("enemies"))
         {

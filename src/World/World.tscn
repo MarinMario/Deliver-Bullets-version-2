@@ -12,3 +12,8 @@ position = Vector2( 639.124, 215.27 )
 
 [node name="TestEnemy2" parent="." instance=ExtResource( 2 )]
 position = Vector2( 327.552, 403.164 )
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+polygon = PoolVector2Array( 285.977, -66.8853, 1047.93, -79.5845, 959.035, 688.718, -9.27936, 517.278, -126.747, -136.731, 406.62, -155.78, 422.494, -82.7593, -75.9502, -76.4097, 16.1191, 460.132, 930.462, 653.795, 1022.53, -41.4869, 301.851, -12.9136 )

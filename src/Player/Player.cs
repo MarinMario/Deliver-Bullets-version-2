@@ -27,12 +27,12 @@ public class Player : KinematicBody2D
         velocity = MoveAndSlide(velocity);
 
         //shoot
-        if (Input.IsActionJustPressed("shoot")) shoot();
+        if (Input.IsActionJustPressed("shoot")) Shoot();
     }
 
-    private void shoot()
+    private void Shoot()
     {
-        var bullet = (Bullet)(GetNode<Node>("/root/Resources").Get("BULLET") as PackedScene).Instance();
+        var bullet = (Bullet)(GetNode("/root/Resources").Get("BULLET") as PackedScene).Instance();
         bullet.Init(Position);
         GetParent().AddChild(bullet);
     }
