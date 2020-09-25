@@ -14,6 +14,7 @@ public class BaseEnemy : KinematicBody2D
         var targetDetector = GetNode<Area2D>("TargetDetector");
         targetDetector.Connect("body_entered", this, "PotentialTargetDetected");
         targetDetector.Connect("body_exited", this, "TargetLeft");
+        AddToGroup("Enemies");
     }
     public override void _Process(float delta)
     {
