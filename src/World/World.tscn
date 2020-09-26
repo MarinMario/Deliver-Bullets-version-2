@@ -10,9 +10,6 @@
 [node name="TestEnemy" parent="." instance=ExtResource( 2 )]
 position = Vector2( 639.124, 215.27 )
 
-[node name="TestEnemy2" parent="." instance=ExtResource( 2 )]
-position = Vector2( 327.552, 403.164 )
-
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 collision_layer = 7
 collision_mask = 7

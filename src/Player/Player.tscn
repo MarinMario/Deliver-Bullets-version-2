@@ -10,6 +10,7 @@ extents = Vector2( 30.9901, 29.5206 )
 "EnemyTarget",
 ]]
 script = ExtResource( 1 )
+health = 100000
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 2 )

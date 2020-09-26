@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public class Player : KinematicBody2D
+public class Player : Entity
 {
     [Export]
     int maxSpeed = 400;
@@ -11,8 +11,7 @@ public class Player : KinematicBody2D
     int friction = 1000;
     Vector2 velocity;
 
-
-    public override void _Process(float delta)
+    protected override void Process(float delta)
     {
         //player movement
         Vector2 motionVector;
@@ -33,8 +32,7 @@ public class Player : KinematicBody2D
     private void Shoot()
     {
         var bullet = (Bullet)(GetNode("/root/Resources").Get("BULLET") as PackedScene).Instance();
-        bullet.Init(Position);
+        bullet.Init(Position, (GetGlobalMousePosition() - Position).Normalized(), "Enemies");
         GetParent().AddChild(bullet);
     }
-
 }

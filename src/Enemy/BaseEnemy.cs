@@ -2,9 +2,8 @@ using Godot;
 using System;
 
 
-public class BaseEnemy : KinematicBody2D
+public class BaseEnemy : Entity
 {
-    public int health = 100;
     public int speed = 200;
     private KinematicBody2D target;
     private Vector2 directionToFollow = Vector2.Zero;
@@ -13,38 +12,31 @@ public class BaseEnemy : KinematicBody2D
     {
         var targetDetector = GetNode<Area2D>("TargetDetector");
         targetDetector.Connect("body_entered", this, "PotentialTargetDetected");
-        targetDetector.Connect("body_exited", this, "TargetLeft");
+        targetDetector.Connect("body_exited", this, "PotentialTargetExited");
         AddToGroup("Enemies");
         CollisionLayer = 2;
         CollisionMask = 2;
     }
-    public override void _Process(float delta)
+    protected override void Process(float delta)
     {
-        if (health <= 0)
-            Die();
-
-        if (target == null)
-            MoveAtRandom(delta);
-        else
+        if (target != null)
+        {
             FollowTarget(delta);
+            FindAttackOpportunity(delta);
+        }
+        else
+            MoveAtRandom(delta);
 
         MoveAndSlide(directionToFollow * speed);
-
 
         Process2(delta);
     }
 
-    // method to be overriden if you want to exted the _Process method
+    /// <summary>
+    /// method to be overriden if you want to extend the Process method.
+    /// Process is different from _Process.
+    /// </summary>
     protected virtual void Process2(float delta) { }
-    public void TakeDamange(int dmg)
-    {
-        health -= dmg;
-    }
-    protected void Die()
-    {
-        QueueFree();
-    }
-
 
     private float updateTargetDirectionTimer = 0f;
     private void FollowTarget(float delta)
@@ -81,11 +73,25 @@ public class BaseEnemy : KinematicBody2D
         //GD.Print($"{body.Name} entered");
     }
 
-    private void TargetLeft(KinematicBody2D body)
+    private void PotentialTargetExited(KinematicBody2D body)
     {
         if (body.IsInGroup("EnemyTarget"))
             target = null;
 
         //GD.Print($"{body.Name} exited");
+    }
+
+    private float attackTimer = 0f;
+    private void FindAttackOpportunity(float delta)
+    {
+        attackTimer += delta;
+        if (attackTimer > 0.5f)
+        {
+            attackTimer = 0f;
+
+            var bullet = (Bullet)(GetNode("/root/Resources").Get("BULLET") as PackedScene).Instance();
+            bullet.Init(Position, directionToFollow, "EnemyTarget");
+            GetParent().AddChild(bullet);
+        }
     }
 }
