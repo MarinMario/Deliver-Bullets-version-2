@@ -4,7 +4,13 @@ using System;
 
 public class BaseEnemy : Entity
 {
-    public int speed = 200;
+    [Export]
+    protected int speed = 200;
+    [Export]
+    protected float changeDirectionTime = 3f;
+    [Export]
+    protected float attackTime = 2f;
+
     private KinematicBody2D target;
     private Vector2 directionToFollow = Vector2.Zero;
 
@@ -54,7 +60,7 @@ public class BaseEnemy : Entity
     private void MoveAtRandom(float delta)
     {
         randomDirectionTimer += delta;
-        if (randomDirectionTimer > 3f || GetSlideCount() > 0)
+        if (randomDirectionTimer > changeDirectionTime || GetSlideCount() > 0)
         {
             randomDirectionTimer = 0f;
 
@@ -85,7 +91,7 @@ public class BaseEnemy : Entity
     private void FindAttackOpportunity(float delta)
     {
         attackTimer += delta;
-        if (attackTimer > 0.5f)
+        if (attackTimer > attackTime)
         {
             attackTimer = 0f;
 
