@@ -36,6 +36,8 @@ position = Vector2( 4, 0 )
 frames = SubResource( 1 )
 animation = "Walk"
 
+[node name="Sprite" type="Sprite" parent="Sprites"]
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 2 )
 

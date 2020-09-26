@@ -28,7 +28,8 @@ public class Player : Entity
             velocity = velocity.MoveToward(motionVector * maxSpeed, acceleration * delta);
             animationState = AnimationState.Walk;
 
-            //I have to also check with an else if so sprites.Scale won't be set to (-1, 1) when the player moves up or down only
+            //I have to also check with an else if so sprites.Scale won't be set to (-1, 1) 
+            //when the player moves up or down only
             if (motionVector.x > 0)
                 sprites.Scale = new Vector2(1, 1);
             else if (motionVector.x < 0)
@@ -39,7 +40,6 @@ public class Player : Entity
             velocity = velocity.MoveToward(Vector2.Zero, friction * delta);
             animationState = AnimationState.Idle;
         }
-
 
         MoveAndSlide(velocity);
         sprites.GetNode<AnimatedSprite>("AnimatedSprite").Play(animationState.ToString());
