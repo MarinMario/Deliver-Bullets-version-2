@@ -15,6 +15,8 @@ public class BaseEnemy : KinematicBody2D
         targetDetector.Connect("body_entered", this, "PotentialTargetDetected");
         targetDetector.Connect("body_exited", this, "TargetLeft");
         AddToGroup("Enemies");
+        CollisionLayer = 2;
+        CollisionMask = 2;
     }
     public override void _Process(float delta)
     {
@@ -76,7 +78,7 @@ public class BaseEnemy : KinematicBody2D
         if (body.IsInGroup("EnemyTarget"))
             target = body;
 
-        GD.Print($"{body.Name} entered");
+        //GD.Print($"{body.Name} entered");
     }
 
     private void TargetLeft(KinematicBody2D body)
@@ -84,6 +86,6 @@ public class BaseEnemy : KinematicBody2D
         if (body.IsInGroup("EnemyTarget"))
             target = null;
 
-        GD.Print($"{body.Name} exited");
+        //GD.Print($"{body.Name} exited");
     }
 }

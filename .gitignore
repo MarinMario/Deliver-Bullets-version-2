@@ -10,3 +10,6 @@ data_*/
 
 # vsc
 .vscode/
+
+# vs
+.vs/
