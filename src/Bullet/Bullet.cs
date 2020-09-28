@@ -13,6 +13,7 @@ public class Bullet : Area2D
     {
         Rotation = (float)Math.Atan2(targetDirection.y, targetDirection.x);
     }
+
     public override void _Process(float delta)
     {
         despawnTimer += delta;

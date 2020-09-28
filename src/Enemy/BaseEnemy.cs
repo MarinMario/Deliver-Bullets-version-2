@@ -17,8 +17,8 @@ public class BaseEnemy : Entity
     public override void _Ready()
     {
         var targetDetector = GetNode<Area2D>("TargetDetector");
-        targetDetector.Connect("body_entered", this, "PotentialTargetDetected");
-        targetDetector.Connect("body_exited", this, "PotentialTargetExited");
+        targetDetector.Connect("body_entered", this, nameof(PotentialTargetDetected));
+        targetDetector.Connect("body_exited", this, nameof(PotentialTargetExited));
         AddToGroup("Enemies");
         CollisionLayer = 2;
         CollisionMask = 2;
@@ -95,9 +95,10 @@ public class BaseEnemy : Entity
         {
             attackTimer = 0f;
 
-            var bullet = (Bullet)(GetNode("/root/Resources").Get("BULLET") as PackedScene).Instance();
-            bullet.Init(Position, directionToFollow, "EnemyTarget");
-            GetParent().AddChild(bullet);
+            GetNode<Weapon>("Weapon").Shoot(directionToFollow, "EnemyTarget");
+            //var bullet = (Bullet)GetNode<Resources>("/root/Resources").Bullet.Instance();
+            //bullet.Init(Position, directionToFollow, "EnemyTarget");
+            //GetParent().AddChild(bullet);
         }
     }
 }

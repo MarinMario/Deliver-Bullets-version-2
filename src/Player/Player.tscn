@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Player/Player.cs" type="Script" id=1]
 [ext_resource path="res://Player/player_walk_3.png" type="Texture" id=2]
@@ -6,6 +6,9 @@
 [ext_resource path="res://Player/player_walk_1.png" type="Texture" id=4]
 [ext_resource path="res://Player/player_walk_2.png" type="Texture" id=5]
 [ext_resource path="res://Player/player_idle_1.png" type="Texture" id=6]
+[ext_resource path="res://Weapons/Weapon.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Player/player_hand.png" type="Texture" id=8]
+[ext_resource path="res://Weapons/Pistol.tres" type="Resource" id=9]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
@@ -29,14 +32,21 @@ extents = Vector2( 16.9627, 63.4177 )
 script = ExtResource( 1 )
 health = 100000
 
-[node name="Sprites" type="Node2D" parent="."]
+[node name="Sprite" type="Node2D" parent="."]
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="Sprites"]
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Sprite"]
 position = Vector2( 4, 0 )
 frames = SubResource( 1 )
 animation = "Walk"
 
-[node name="Sprite" type="Sprite" parent="Sprites"]
+[node name="Hand" type="Sprite" parent="Sprite"]
+position = Vector2( -13.1102, -10.8627 )
+texture = ExtResource( 8 )
+offset = Vector2( 15, 0 )
+
+[node name="Weapon" parent="Sprite/Hand" instance=ExtResource( 7 )]
+position = Vector2( 38.4309, -0.582523 )
+weapon = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 2 )

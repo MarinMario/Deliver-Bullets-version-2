@@ -21,7 +21,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
-Resources="*res://Globals/Resources.tscn"
+GameManager="*res://GameManager/GameManager.tscn"
 
 [display]
 

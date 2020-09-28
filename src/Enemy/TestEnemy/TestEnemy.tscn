@@ -1,7 +1,9 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://icon.png" type="Texture" id=1]
 [ext_resource path="res://Enemy/TestEnemy/TestEnemy.cs" type="Script" id=2]
+[ext_resource path="res://Weapons/Pistol.tres" type="Resource" id=3]
+[ext_resource path="res://Weapons/Weapon.tscn" type="PackedScene" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 26.886, 27.6581 )
@@ -27,3 +29,6 @@ offset = Vector2( 0, -34 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TargetDetector"]
 shape = SubResource( 2 )
+
+[node name="Weapon" parent="." instance=ExtResource( 4 )]
+weapon = ExtResource( 3 )
