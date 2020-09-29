@@ -1,0 +1,11 @@
+[gd_resource type="Resource" load_steps=3 format=2]
+
+[ext_resource path="res://Enemy/BaseEnemyResource.cs" type="Script" id=1]
+[ext_resource path="res://Enemy/BaseEnemy1/enemy1_idle.png" type="Texture" id=2]
+
+[resource]
+script = ExtResource( 1 )
+texture = ExtResource( 2 )
+speed = 200
+changeDirectionTime = 3.0
+attackTime = 2.0

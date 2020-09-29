@@ -4,7 +4,7 @@ using System;
 public class Weapon : Node2D
 {
     [Export]
-    WeaponResource weapon;
+    public WeaponResource weapon;
     public override void _Ready()
     {
         GetNode<Sprite>("Sprite").Texture = weapon.texture;

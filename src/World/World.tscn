@@ -1,8 +1,10 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=1]
-[ext_resource path="res://Enemy/TestEnemy/TestEnemy.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Enemy/BaseEnemy.tscn" type="PackedScene" id=2]
 [ext_resource path="res://World/World.cs" type="Script" id=3]
+[ext_resource path="res://Enemy/BaseEnemy1/BaseEnemy1.tres" type="Resource" id=4]
+[ext_resource path="res://Weapons/Pistol.tres" type="Resource" id=5]
 
 [node name="World" type="YSort"]
 script = ExtResource( 3 )
@@ -10,12 +12,14 @@ script = ExtResource( 3 )
 [node name="Player" parent="." instance=ExtResource( 1 )]
 position = Vector2( 267.405, 252.269 )
 
-[node name="TestEnemy" parent="." instance=ExtResource( 2 )]
-position = Vector2( 639.124, 215.27 )
-
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
 collision_layer = 7
 collision_mask = 7
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
 polygon = PoolVector2Array( 285.977, -66.8853, 1047.93, -79.5845, 959.035, 688.718, -9.27936, 517.278, -126.747, -136.731, 406.62, -155.78, 422.494, -82.7593, -75.9502, -76.4097, 16.1191, 460.132, 930.462, 653.795, 1022.53, -41.4869, 301.851, -12.9136 )
+
+[node name="BaseEnemy" parent="." instance=ExtResource( 2 )]
+position = Vector2( 646.062, 331.04 )
+enemy = ExtResource( 4 )
+weapon = ExtResource( 5 )

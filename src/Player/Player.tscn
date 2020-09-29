@@ -45,7 +45,7 @@ texture = ExtResource( 8 )
 offset = Vector2( 15, 0 )
 
 [node name="Weapon" parent="Sprite/Hand" instance=ExtResource( 7 )]
-position = Vector2( 38.4309, -0.582523 )
+position = Vector2( 45, -3 )
 weapon = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

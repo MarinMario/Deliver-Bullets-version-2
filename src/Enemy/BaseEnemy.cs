@@ -5,11 +5,9 @@ using System;
 public class BaseEnemy : Entity
 {
     [Export]
-    protected int speed = 200;
+    public BaseEnemyResource enemy;
     [Export]
-    protected float changeDirectionTime = 3f;
-    [Export]
-    protected float attackTime = 2f;
+    public WeaponResource weapon;
 
     private KinematicBody2D target;
     private Vector2 directionToFollow = Vector2.Zero;
@@ -17,9 +15,9 @@ public class BaseEnemy : Entity
     public override void _Ready()
     {
         var targetDetector = GetNode<Area2D>("TargetDetector");
+        GetNode<Sprite>("Sprite").Texture = enemy.texture;
         targetDetector.Connect("body_entered", this, nameof(PotentialTargetDetected));
         targetDetector.Connect("body_exited", this, nameof(PotentialTargetExited));
-        AddToGroup("Enemies");
         CollisionLayer = 2;
         CollisionMask = 2;
     }
@@ -33,16 +31,10 @@ public class BaseEnemy : Entity
         else
             MoveAtRandom(delta);
 
-        MoveAndSlide(directionToFollow * speed);
+        MoveAndSlide(directionToFollow * enemy.speed);
 
-        Process2(delta);
+        GetNode<Weapon>("Weapon").weapon = weapon;
     }
-
-    /// <summary>
-    /// method to be overriden if you want to extend the Process method.
-    /// Process is different from _Process.
-    /// </summary>
-    protected virtual void Process2(float delta) { }
 
     private float updateTargetDirectionTimer = 0f;
     private void FollowTarget(float delta)
@@ -60,7 +52,7 @@ public class BaseEnemy : Entity
     private void MoveAtRandom(float delta)
     {
         randomDirectionTimer += delta;
-        if (randomDirectionTimer > changeDirectionTime || GetSlideCount() > 0)
+        if (randomDirectionTimer > enemy.changeDirectionTime || GetSlideCount() > 0)
         {
             randomDirectionTimer = 0f;
 
@@ -91,7 +83,7 @@ public class BaseEnemy : Entity
     private void FindAttackOpportunity(float delta)
     {
         attackTimer += delta;
-        if (attackTimer > attackTime)
+        if (attackTimer > enemy.attackTime)
         {
             attackTimer = 0f;
 
