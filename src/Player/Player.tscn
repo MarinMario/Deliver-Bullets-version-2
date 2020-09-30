@@ -24,31 +24,35 @@ animations = [ {
 } ]
 
 [sub_resource type="RectangleShape2D" id=2]
-extents = Vector2( 16.9627, 63.4177 )
+extents = Vector2( 8, 56 )
 
 [node name="Player" type="KinematicBody2D" groups=[
 "EnemyTarget",
 ]]
 script = ExtResource( 1 )
-health = 100000
 
-[node name="Sprite" type="Node2D" parent="."]
+[node name="Animatable" type="Node2D" parent="."]
+position = Vector2( 0, -64 )
+__meta__ = {
+"_edit_group_": true
+}
 
-[node name="AnimatedSprite" type="AnimatedSprite" parent="Sprite"]
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Animatable"]
 position = Vector2( 4, 0 )
 frames = SubResource( 1 )
 animation = "Walk"
 
-[node name="Hand" type="Sprite" parent="Sprite"]
+[node name="Hand" type="Sprite" parent="Animatable"]
 position = Vector2( -13.1102, -10.8627 )
 texture = ExtResource( 8 )
 offset = Vector2( 15, 0 )
 
-[node name="Weapon" parent="Sprite/Hand" instance=ExtResource( 7 )]
+[node name="Weapon" parent="Animatable/Hand" instance=ExtResource( 7 )]
 position = Vector2( 45, -3 )
 weapon = ExtResource( 9 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, -64 )
 shape = SubResource( 2 )
 
 [node name="Camera2D" type="Camera2D" parent="."]

@@ -2,10 +2,11 @@ using Godot;
 using System;
 using System.Diagnostics;
 
-public class Entity : KinematicBody2D
+public abstract class Entity : KinematicBody2D
 {
-    [Export]
     protected int health = 100;
+
+    protected enum AnimationState { Idle, Walk }
 
     public override void _Process(float delta)
     {
@@ -29,4 +30,11 @@ public class Entity : KinematicBody2D
         QueueFree();
     }
 
+    protected static void Flip(Vector2 motionVector, Node2D nodeToFlip)
+    {
+        if (motionVector.x > 0)
+            nodeToFlip.Scale = new Vector2(1, 1);
+        else if (motionVector.x < 0)
+            nodeToFlip.Scale = new Vector2(-1, 1);
+    }
 }

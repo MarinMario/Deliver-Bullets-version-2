@@ -31,7 +31,7 @@ public class Bullet : Area2D
     }
 
     // this is called by body_entered signal
-    private void Hit(Entity body)
+    void Hit(Entity body)
     {
         if (body.IsInGroup(targetGroup))
         {
