@@ -29,12 +29,4 @@ public abstract class Entity : KinematicBody2D
     {
         QueueFree();
     }
-
-    protected static void Flip(Vector2 motionVector, Node2D nodeToFlip)
-    {
-        if (motionVector.x > 0)
-            nodeToFlip.Scale = new Vector2(1, 1);
-        else if (motionVector.x < 0)
-            nodeToFlip.Scale = new Vector2(-1, 1);
-    }
 }

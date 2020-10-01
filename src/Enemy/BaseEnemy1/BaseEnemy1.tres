@@ -8,5 +8,5 @@ script = ExtResource( 1 )
 animations = ExtResource( 2 )
 speed = 200
 changeDirectionTime = 3.0
-attackTime = 2.0
+attackTime = 0.1
 health = 100

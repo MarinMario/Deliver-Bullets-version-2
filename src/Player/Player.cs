@@ -10,12 +10,23 @@ public class Player : Entity
     [Export]
     readonly int friction = 1000;
 
+    Node2D nAnimatable;
+    AnimatedSprite nAnimatedSprite;
+    Weapon nWeapon;
+    Sprite nHand;
+    Position2D nShootPosition;
+
     AnimationState animationState = AnimationState.Idle;
     Vector2 velocity;
 
     public override void _Ready()
     {
         health = 100000;
+        nAnimatable = GetNode<Node2D>("Animatable");
+        nAnimatedSprite = GetNode<AnimatedSprite>("Animatable/AnimatedSprite");
+        nWeapon = GetNode<Weapon>("Animatable/Hand/Weapon");
+        nHand = GetNode<Sprite>("Animatable/Hand");
+        nShootPosition = GetNode<Position2D>("Animatable/Hand/Weapon/Position2D");
     }
 
     protected override void Process(float delta)
@@ -30,7 +41,7 @@ public class Player : Entity
             velocity = velocity.MoveToward(motionVector * maxSpeed, acceleration * delta);
             animationState = AnimationState.Walk;
 
-            Flip(motionVector, GetNode<Node2D>("Animatable"));
+            nAnimatable.Scale = motionVector.x > 0 ? Vector2.One : new Vector2(-1, 1);
         }
         else
         {
@@ -40,12 +51,12 @@ public class Player : Entity
 
         MoveAndSlide(velocity);
 
-        GetNode<AnimatedSprite>("Animatable/AnimatedSprite").Play(animationState.ToString());
+        nAnimatedSprite.Play(animationState.ToString());
 
         if (Input.IsActionJustPressed("shoot")) 
-            GetNode<Weapon>("Animatable/Hand/Weapon").Shoot((GetGlobalMousePosition() - Position).Normalized(), "Enemies");
+            nWeapon.Shoot((GetGlobalMousePosition() - nShootPosition.GlobalPosition).Normalized(), "Enemies");
 
-        GetNode<Sprite>("Animatable/Hand").LookAt(GetGlobalMousePosition());
+        nHand.LookAt(GetGlobalMousePosition());
 
     }
 }

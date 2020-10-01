@@ -9,18 +9,28 @@ public class BaseEnemy : Entity
     [Export]
     public WeaponResource weapon;
 
-    KinematicBody2D target;
+    KinematicBody2D nTarget;
+    Weapon nWeapon;
+    AnimatedSprite nAnimatedSprite;
+    Node2D nAnimatable;
+    Sprite nHand;
+
     Vector2 directionToFollow = Vector2.Zero;
     AnimationState animationState = AnimationState.Idle;
 
     public override void _Ready()
     {
-        GetNode<AnimatedSprite>("Animatable/AnimatedSprite").Frames = enemy.animations;
+        nWeapon = GetNode<Weapon>("Animatable/Hand/Weapon");
+        nAnimatedSprite = GetNode<AnimatedSprite>("Animatable/AnimatedSprite");
+        nAnimatable = GetNode<Node2D>("Animatable");
+        nHand = GetNode<Sprite>("Animatable/Hand");
+
+        nAnimatedSprite.Frames = enemy.animations;
         health = enemy.health;
     }
     protected override void Process(float delta)
     {
-        if (target != null)
+        if (nTarget != null)
         {
             FollowTarget(delta);
             FindAttackOpportunity(delta);
@@ -30,14 +40,15 @@ public class BaseEnemy : Entity
 
         MoveAndSlide(directionToFollow * enemy.speed);
 
-        GetNode<Weapon>("Animatable/Weapon").weapon = weapon;
+        nWeapon.weapon = weapon;
 
         animationState = directionToFollow != Vector2.Zero 
             ? AnimationState.Walk 
             : AnimationState.Idle;
-        GetNode<AnimatedSprite>("Animatable/AnimatedSprite").Play(animationState.ToString());
+        nAnimatedSprite.Play(animationState.ToString());
 
-        Flip(directionToFollow, GetNode<Node2D>("Animatable"));
+        // Flip(directionToFollow, nAnimatable);
+        nAnimatable.Scale = directionToFollow.x > 0 ? Vector2.One : new Vector2(-1, 1);
     }
 
     float updateTargetDirectionTimer = 0f;
@@ -46,7 +57,7 @@ public class BaseEnemy : Entity
         updateTargetDirectionTimer += delta;
         if (updateTargetDirectionTimer > 0.5f)
         {
-            directionToFollow = (target.Position - Position).Normalized();
+            directionToFollow = (nTarget.GlobalPosition - GlobalPosition).Normalized();
             updateTargetDirectionTimer = 0f;
         }
     }
@@ -71,7 +82,7 @@ public class BaseEnemy : Entity
     void PotentialTargetDetected(KinematicBody2D body)
     {
         if (body.IsInGroup("EnemyTarget"))
-            target = body;
+            nTarget = body;
 
         //GD.Print($"{body.Name} entered");
     }
@@ -79,7 +90,7 @@ public class BaseEnemy : Entity
     void PotentialTargetExited(KinematicBody2D body)
     {
         if (body.IsInGroup("EnemyTarget"))
-            target = null;
+            nTarget = null;
 
         //GD.Print($"{body.Name} exited");
     }
@@ -91,11 +102,10 @@ public class BaseEnemy : Entity
         if (attackTimer > enemy.attackTime)
         {
             attackTimer = 0f;
+            nWeapon.Shoot(directionToFollow, "EnemyTarget");
 
-            GetNode<Weapon>("Animatable/Weapon").Shoot(directionToFollow, "EnemyTarget");
-            //var bullet = (Bullet)GetNode<Resources>("/root/Resources").Bullet.Instance();
-            //bullet.Init(Position, directionToFollow, "EnemyTarget");
-            //GetParent().AddChild(bullet);
+            var rotation = (float)Math.Atan2(directionToFollow.y, directionToFollow.x);
+            nHand.Rotation = directionToFollow.x > 0 ? rotation : 1/rotation;
         }
     }
 }
