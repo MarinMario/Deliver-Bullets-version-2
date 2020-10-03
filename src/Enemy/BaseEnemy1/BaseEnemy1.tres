@@ -1,11 +1,13 @@
-[gd_resource type="Resource" load_steps=3 format=2]
+[gd_resource type="Resource" load_steps=4 format=2]
 
 [ext_resource path="res://Enemy/BaseEnemyResource.cs" type="Script" id=1]
 [ext_resource path="res://Enemy/BaseEnemy1/BaseEnemy1Animations.tres" type="SpriteFrames" id=2]
+[ext_resource path="res://Enemy/BaseEnemy1/enemy1_hand.png" type="Texture" id=3]
 
 [resource]
 script = ExtResource( 1 )
 animations = ExtResource( 2 )
+handTexture = ExtResource( 3 )
 speed = 200
 changeDirectionTime = 3.0
 attackTime = 0.1

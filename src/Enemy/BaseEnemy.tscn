@@ -10,7 +10,7 @@
 extents = Vector2( 8, 56 )
 
 [sub_resource type="CircleShape2D" id=2]
-radius = 203.474
+radius = 296.432
 
 [node name="BaseEnemy" type="KinematicBody2D" groups=[
 "Enemies",
@@ -43,7 +43,6 @@ weapon = ExtResource( 4 )
 position = Vector2( 8, -72 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TargetDetector"]
-position = Vector2( -8, 8 )
 shape = SubResource( 2 )
 [connection signal="body_entered" from="TargetDetector" to="." method="PotentialTargetDetected"]
 [connection signal="body_exited" from="TargetDetector" to="." method="PotentialTargetExited"]

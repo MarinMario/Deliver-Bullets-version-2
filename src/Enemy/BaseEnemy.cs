@@ -17,6 +17,7 @@ public class BaseEnemy : Entity
 
     Vector2 directionToFollow = Vector2.Zero;
     AnimationState animationState = AnimationState.Idle;
+    int initialSpeed;
 
     public override void _Ready()
     {
@@ -25,11 +26,15 @@ public class BaseEnemy : Entity
         nAnimatable = GetNode<Node2D>("Animatable");
         nHand = GetNode<Sprite>("Animatable/Hand");
 
-        nAnimatedSprite.Frames = enemy.animations;
         health = enemy.health;
+        initialSpeed = enemy.speed;
+        nAnimatedSprite.Frames = enemy.animations;
+        nHand.Texture = enemy.handTexture;
     }
     protected override void Process(float delta)
     {
+        nWeapon.weapon = weapon;
+        
         if (nTarget != null)
         {
             FollowTarget(delta);
@@ -40,14 +45,11 @@ public class BaseEnemy : Entity
 
         MoveAndSlide(directionToFollow * enemy.speed);
 
-        nWeapon.weapon = weapon;
-
-        animationState = directionToFollow != Vector2.Zero 
+        animationState = directionToFollow != Vector2.Zero && enemy.speed != 0
             ? AnimationState.Walk 
             : AnimationState.Idle;
         nAnimatedSprite.Play(animationState.ToString());
 
-        // Flip(directionToFollow, nAnimatable);
         nAnimatable.Scale = directionToFollow.x > 0 ? Vector2.One : new Vector2(-1, 1);
     }
 
@@ -58,6 +60,10 @@ public class BaseEnemy : Entity
         if (updateTargetDirectionTimer > 0.5f)
         {
             directionToFollow = (nTarget.GlobalPosition - GlobalPosition).Normalized();
+
+            var dis = GlobalPosition.DistanceSquaredTo(nTarget.GlobalPosition);
+            enemy.speed = dis > 50000 ? initialSpeed : 0;
+
             updateTargetDirectionTimer = 0f;
         }
     }
@@ -99,13 +105,13 @@ public class BaseEnemy : Entity
     void FindAttackOpportunity(float delta)
     {
         attackTimer += delta;
-        if (attackTimer > enemy.attackTime)
+        if (attackTimer > enemy.attackTime && directionToFollow != Vector2.Zero)
         {
             attackTimer = 0f;
             nWeapon.Shoot(directionToFollow, "EnemyTarget");
 
             var rotation = (float)Math.Atan2(directionToFollow.y, directionToFollow.x);
-            nHand.Rotation = directionToFollow.x > 0 ? rotation : 1/rotation;
+            nHand.Rotation = directionToFollow.x >= 0 ? rotation : 1/rotation;
         }
     }
 }

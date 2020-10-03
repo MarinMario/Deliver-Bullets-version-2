@@ -6,6 +6,8 @@ public class BaseEnemyResource : Resource
     [Export]
     public SpriteFrames animations;
     [Export]
+    public Texture handTexture;
+    [Export]
     public int speed = 200;
     [Export]
     public float changeDirectionTime = 3f;
