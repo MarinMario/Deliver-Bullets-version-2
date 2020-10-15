@@ -17,7 +17,6 @@ _global_script_class_icons={
 
 config/name="Deliver-Bullets"
 run/main_scene="res://World/World.tscn"
-config/icon="res://icon.png"
 
 [autoload]
 
